@@ -37,14 +37,14 @@
 		<httphandler.version>1.0.0</httphandler.version>
 		<spider.version>1.0.0</spider.version>
 		<basicstorage.version>1.1.0</basicstorage.version>
-		<sqldatabase.version>1.1.0</sqldatabase.version>
+		<sqldatabase.version>1.1.1</sqldatabase.version>
 	</properties>
 
 	<scm>
 		<connection>scm:git:https://github.com/lsu-ub-uu/alvin-mixedstorage.git</connection>
 		<developerConnection>scm:git:https://github.com/lsu-ub-uu/alvin-mixedstorage.git</developerConnection>
 		<url>https://github.com/lsu-ub-uu/alvin-mixedstorage.git</url>
-	  <tag>release/1.1</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<dependencies>
