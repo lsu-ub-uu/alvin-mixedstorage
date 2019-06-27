@@ -36,7 +36,8 @@
 		<gatekeeper.version>1.1.0</gatekeeper.version>
 		<httphandler.version>1.0.0</httphandler.version>
 		<spider.version>1.2.0</spider.version>
-		<basicstorage.version>1.2.0</basicstorage.version>
+		<basicstorage.version>1.5.0</basicstorage.version>
+		<storage.version>1.0.0</storage.version>
 		<sqldatabase.version>1.1.1</sqldatabase.version>
 	</properties>
 
@@ -75,6 +76,11 @@
 			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>basicstorage</artifactId>
 			<version>${basicstorage.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>storage</artifactId>
+			<version>${storage.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>

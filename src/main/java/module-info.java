@@ -6,6 +6,7 @@ module se.uu.ub.cora.alvin.mixedstorage {
 	requires se.uu.ub.cora.gatekeeper;
 	requires se.uu.ub.cora.logger;
 	requires se.uu.ub.cora.basicstorage;
+	requires se.uu.ub.cora.storage;
 
 	exports se.uu.ub.cora.alvin.mixedstorage.db;
 	exports se.uu.ub.cora.alvin.mixedstorage.fedora;
