@@ -130,7 +130,7 @@ public class AlvinDbToCoraUserConverterTest {
 		DataGroup user = converter.fromMap(rowFromDb);
 
 		assertEquals(user.getNameInData(), "user");
-		assertEquals(user.getAttribute("type"), "coraUser");
+		assertEquals(user.getAttribute("type").getValue(), "coraUser");
 
 		DataGroupSpy factoredRecordInfo = dataGroupFactory.factoredDataGroups.get(1);
 		assertEquals(factoredRecordInfo.nameInData, "recordInfo");
