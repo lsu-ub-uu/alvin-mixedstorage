@@ -147,7 +147,7 @@ public class AlvinMixedUserStorageTest {
 		DataGroup userDataGroup = alvinMixedUserStorage.getUserByIdFromLogin(userId);
 		assertNotNull(userDataGroup);
 		assertEquals(userDataGroup.getNameInData(), "user");
-		assertEquals(userDataGroup.getAttribute("type"), "coraUser");
+		assertEquals(userDataGroup.getAttribute("type").getValue(), "coraUser");
 
 		assertEquals(userDataGroup.getFirstAtomicValueWithNameInData("userId"), userId);
 		DataGroup recordInfo = userDataGroup.getFirstGroupWithNameInData("recordInfo");

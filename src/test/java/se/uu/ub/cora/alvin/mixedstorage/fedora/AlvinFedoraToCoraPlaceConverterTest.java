@@ -61,7 +61,7 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		DataGroup placeDataGroup = converter.fromXML(TestDataProvider.place22XML);
 		assertEquals(placeDataGroup.getNameInData(), "authority");
 
-		String attributeValueForType = placeDataGroup.getAttribute("type");
+		String attributeValueForType = placeDataGroup.getAttribute("type").getValue();
 		assertEquals(attributeValueForType, "place");
 
 		DataGroup recordInfo = placeDataGroup.getFirstGroupWithNameInData("recordInfo");
@@ -92,9 +92,9 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 				"2014-12-18T20:21:20.880000Z");
 
 		DataGroup defaultName = placeDataGroup.getFirstGroupWithNameInData("name");
-		assertEquals(defaultName.getAttribute("type"), "authorized");
+		assertEquals(defaultName.getAttribute("type").getValue(), "authorized");
 		DataGroup defaultNamePart = defaultName.getFirstGroupWithNameInData("namePart");
-		assertEquals(defaultNamePart.getAttribute("type"), "defaultName");
+		assertEquals(defaultNamePart.getAttribute("type").getValue(), "defaultName");
 		assertEquals(defaultNamePart.getFirstAtomicValueWithNameInData("value"), "Linköping");
 
 		DataGroup coordinates = placeDataGroup.getFirstGroupWithNameInData("coordinates");
@@ -139,9 +139,9 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 				"2016-02-12T10:29:43.147000Z");
 
 		DataGroup defaultName = placeDataGroup.getFirstGroupWithNameInData("name");
-		assertEquals(defaultName.getAttribute("type"), "authorized");
+		assertEquals(defaultName.getAttribute("type").getValue(), "authorized");
 		DataGroup defaultNamePart = defaultName.getFirstGroupWithNameInData("namePart");
-		assertEquals(defaultNamePart.getAttribute("type"), "defaultName");
+		assertEquals(defaultNamePart.getAttribute("type").getValue(), "defaultName");
 		assertEquals(defaultNamePart.getFirstAtomicValueWithNameInData("value"), "Lund");
 
 		DataGroup coordinates = placeDataGroup.getFirstGroupWithNameInData("coordinates");
@@ -193,9 +193,9 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 				"2014-12-18T20:21:20.880000Z");
 
 		DataGroup defaultName = placeDataGroup.getFirstGroupWithNameInData("name");
-		assertEquals(defaultName.getAttribute("type"), "authorized");
+		assertEquals(defaultName.getAttribute("type").getValue(), "authorized");
 		DataGroup defaultNamePart = defaultName.getFirstGroupWithNameInData("namePart");
-		assertEquals(defaultNamePart.getAttribute("type"), "defaultName");
+		assertEquals(defaultNamePart.getAttribute("type").getValue(), "defaultName");
 		assertEquals(defaultNamePart.getFirstAtomicValueWithNameInData("value"), "Linköping");
 
 		DataGroup coordinates = placeDataGroup.getFirstGroupWithNameInData("coordinates");
@@ -332,9 +332,9 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		DataGroup placeDataGroup = converter.fromXML(TestDataProvider.place24XML);
 
 		DataGroup defaultName = placeDataGroup.getFirstGroupWithNameInData("name");
-		assertEquals(defaultName.getAttribute("type"), "authorized");
+		assertEquals(defaultName.getAttribute("type").getValue(), "authorized");
 		DataGroup defaultNamePart = defaultName.getFirstGroupWithNameInData("namePart");
-		assertEquals(defaultNamePart.getAttribute("type"), "defaultName");
+		assertEquals(defaultNamePart.getAttribute("type").getValue(), "defaultName");
 		assertEquals(defaultNamePart.getFirstAtomicValueWithNameInData("value"), "Lund");
 		DataAttribute alternativeAttribute = new DataAttributeSpy("type", "alternative");
 
@@ -353,9 +353,9 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		DataGroup placeDataGroup = converter.fromXML(TestDataProvider.place24DoublePlacesXML);
 
 		DataGroup defaultName = placeDataGroup.getFirstGroupWithNameInData("name");
-		assertEquals(defaultName.getAttribute("type"), "authorized");
+		assertEquals(defaultName.getAttribute("type").getValue(), "authorized");
 		DataGroup defaultNamePart = defaultName.getFirstGroupWithNameInData("namePart");
-		assertEquals(defaultNamePart.getAttribute("type"), "defaultName");
+		assertEquals(defaultNamePart.getAttribute("type").getValue(), "defaultName");
 		assertEquals(defaultNamePart.getFirstAtomicValueWithNameInData("value"), "Lund");
 		DataAttribute alternativeAttribute = new DataAttributeSpy("type", "alternative");
 
@@ -378,7 +378,7 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		String language = alternativeName.getFirstAtomicValueWithNameInData("language");
 		assertEquals(language, languageCode);
 		DataGroup alternativeNamePart = alternativeName.getFirstGroupWithNameInData("namePart");
-		assertEquals(alternativeNamePart.getAttribute("type"), "defaultName");
+		assertEquals(alternativeNamePart.getAttribute("type").getValue(), "defaultName");
 		assertEquals(alternativeNamePart.getFirstAtomicValueWithNameInData("value"), name);
 	}
 
