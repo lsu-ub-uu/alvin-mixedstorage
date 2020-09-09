@@ -43,7 +43,6 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 	private DataGroupFactory dataGroupFactory;
 	private DataAtomicFactory dataAtomicFactory;
 	private LoggerFactorySpy loggerFactorySpy;
-	private String testedClassName = "AlvinFedoraToCoraPlaceConverter";
 
 	@BeforeMethod
 	public void beforeMethod() {
