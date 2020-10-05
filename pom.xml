@@ -24,17 +24,19 @@
 
 	<properties>
 		<logger.version>2.1.0</logger.version>
-		<coradata.version>3.6.0</coradata.version>
-		<gatekeeper.version>3.4.0</gatekeeper.version>
-		<storage.version>3.6.0</storage.version>
-		<searchstorage.version>3.4.0</searchstorage.version>
+		<coradata.version>3.7.0</coradata.version>
+		<apptokenstorage.version>2.1.0</apptokenstorage.version>
+		<gatekeeper.version>3.5.0</gatekeeper.version>
+		<storage.version>3.7.0</storage.version>
+		<searchstorage.version>3.5.0</searchstorage.version>
 		<httphandler.version>2.1.0</httphandler.version>
-		<basicstorage.version>3.12.0</basicstorage.version>
-		<sqldatabase.version>2.4.0</sqldatabase.version>
+		<basicstorage.version>3.14.0</basicstorage.version>
+		<sqldatabase.version>2.5.0</sqldatabase.version>
 		<messaging.version>2.2.0</messaging.version>
 		<rabbitmq.version>2.1.0</rabbitmq.version>
 		<converter.version>1.2.0</converter.version>
 		<xmlconverter.version>1.3.0</xmlconverter.version>
+		<json.version>2.1.0</json.version>
 	</properties>
 
 	<scm>
@@ -71,20 +73,27 @@
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>apptokenstorage</artifactId>
+			<version>${apptokenstorage.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>gatekeeper</artifactId>
 			<version>${gatekeeper.version}</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>httphandler</artifactId>
 			<version>${httphandler.version}</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>basicstorage</artifactId>
 			<version>${basicstorage.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
@@ -112,6 +121,12 @@
 			<artifactId>xmlconverter</artifactId>
 			<version>${xmlconverter.version}</version>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>json</artifactId>
+			<version>${json.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
