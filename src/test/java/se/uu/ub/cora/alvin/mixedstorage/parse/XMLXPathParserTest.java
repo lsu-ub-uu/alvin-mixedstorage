@@ -18,9 +18,63 @@
  */
 package se.uu.ub.cora.alvin.mixedstorage.parse;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import javax.xml.XMLConstants;
+import javax.xml.transform.OutputKeys;
+
 import org.testng.annotations.Test;
 
+import se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerFactorySpy;
+import se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerSpy;
+
 public class XMLXPathParserTest {
+
+	@Test
+	public void testGetDocumentAsStringSetsAttributesOnFactory() throws Exception {
+		System.setProperty("javax.xml.transform.TransformerFactory",
+				"se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerFactorySpy");
+		XMLXPathParser parser = XMLXPathParser.forXML("<pid></pid>");
+
+		parser.getDocumentAsString("/ok/xpath/string");
+
+		TransformerFactorySpy transformerFactorySpy = TransformerFactorySpy.factory;
+		assertEquals(transformerFactorySpy.attributes.get(XMLConstants.ACCESS_EXTERNAL_DTD), "");
+		assertEquals(transformerFactorySpy.attributes.get(XMLConstants.ACCESS_EXTERNAL_STYLESHEET),
+				"");
+		System.clearProperty("javax.xml.transform.TransformerFactory");
+	}
+
+	@Test
+	public void testGetDocumentAsStringSetsFeaturesOnFactory() throws Exception {
+		System.setProperty("javax.xml.transform.TransformerFactory",
+				"se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerFactorySpy");
+
+		XMLXPathParser parser = XMLXPathParser.forXML("<pid></pid>");
+
+		parser.getDocumentAsString("/ok/xpath/string");
+		TransformerFactorySpy transformerFactorySpy = TransformerFactorySpy.factory;
+		assertTrue(transformerFactorySpy.features.get(XMLConstants.FEATURE_SECURE_PROCESSING));
+		System.clearProperty("javax.xml.transform.TransformerFactory");
+	}
+
+	@Test
+	public void testGetDocumentAsStringSetsOutputPropertiesOnTransformer() throws Exception {
+		System.setProperty("javax.xml.transform.TransformerFactory",
+				"se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerFactorySpy");
+
+		XMLXPathParser parser = XMLXPathParser.forXML("<pid></pid>");
+
+		parser.getDocumentAsString("/ok/xpath/string");
+		TransformerFactorySpy transformerFactorySpy = TransformerFactorySpy.factory;
+		TransformerSpy transformerSpy = transformerFactorySpy.transformers.get(0);
+		assertEquals(transformerSpy.outputProperties.get(OutputKeys.OMIT_XML_DECLARATION), "yes");
+		assertEquals(transformerSpy.outputProperties.get(OutputKeys.METHOD), "xml");
+		assertEquals(transformerSpy.outputProperties.get(OutputKeys.INDENT), "no");
+		assertEquals(transformerSpy.outputProperties.get(OutputKeys.ENCODING), "UTF-8");
+		System.clearProperty("javax.xml.transform.TransformerFactory");
+	}
 
 	@Test(expectedExceptions = ParseException.class, expectedExceptionsMessageRegExp = ""
 			+ "Unable to use xpathString: javax.xml.transform.TransformerException: Extra illegal tokens: 'not'")

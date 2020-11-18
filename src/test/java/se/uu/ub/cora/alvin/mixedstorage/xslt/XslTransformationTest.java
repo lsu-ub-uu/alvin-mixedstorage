@@ -2,8 +2,11 @@ package se.uu.ub.cora.alvin.mixedstorage.xslt;
 
 import static org.testng.Assert.assertEquals;
 
+import javax.xml.XMLConstants;
+
 import org.testng.annotations.Test;
 
+import se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerFactorySpy;
 import se.uu.ub.cora.alvin.mixedstorage.parse.ParseException;
 import se.uu.ub.cora.alvin.mixedstorage.resource.ResourceReader;
 
@@ -25,6 +28,20 @@ public class XslTransformationTest {
 	private XsltTransformation getXsltTransformation() {
 		XsltTransformation xsltTransformation = new XsltTransformation(XSLT_FEDORA_TO_CORA_PLACE);
 		return xsltTransformation;
+	}
+
+	@Test
+	public void testTransformSetsAttributesOnFactory() throws Exception {
+		System.setProperty("javax.xml.transform.TransformerFactory",
+				"se.uu.ub.cora.alvin.mixedstorage.fedora.TransformerFactorySpy");
+		XsltTransformation xsltTransformation = getXsltTransformation();
+		String inputXml = ResourceReader.readResourceAsString(XML_FEDORA_PLACE);
+		xsltTransformation.transform(inputXml);
+		TransformerFactorySpy transformerFactorySpy = TransformerFactorySpy.factory;
+		assertEquals(transformerFactorySpy.attributes.get(XMLConstants.ACCESS_EXTERNAL_DTD), "");
+		assertEquals(transformerFactorySpy.attributes.get(XMLConstants.ACCESS_EXTERNAL_STYLESHEET),
+				"");
+		System.clearProperty("javax.xml.transform.TransformerFactory");
 	}
 
 	@Test

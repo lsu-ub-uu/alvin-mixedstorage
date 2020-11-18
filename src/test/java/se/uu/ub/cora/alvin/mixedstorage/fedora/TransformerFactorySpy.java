@@ -1,7 +1,9 @@
 package se.uu.ub.cora.alvin.mixedstorage.fedora;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.Source;
@@ -13,10 +15,23 @@ import javax.xml.transform.URIResolver;
 
 public class TransformerFactorySpy extends TransformerFactory {
 
+	public static TransformerFactorySpy factory = new TransformerFactorySpy();
+	// public static List<TransformerFactorySpy> factories = new ArrayList<>();
 	public List<TransformerSpy> transformers = new ArrayList<>();
 
+	public Map<String, Object> attributes = new HashMap<>();
+	public Map<String, Boolean> features = new HashMap<>();
+
+	public List<Source> sources = new ArrayList<>();
+
+	public TransformerFactorySpy() {
+		// factories.add(this);
+		factory = this;
+	}
+
 	public static TransformerFactorySpy newInstance() {
-		return new TransformerFactorySpy();
+		// factories.add(factory);
+		return factory;
 	}
 
 	@Override
@@ -65,14 +80,15 @@ public class TransformerFactorySpy extends TransformerFactory {
 
 	@Override
 	public Transformer newTransformer(Source arg0) throws TransformerConfigurationException {
-		// TODO Auto-generated method stub
-		return null;
+		sources.add(arg0);
+		TransformerSpy transformerSpy = new TransformerSpy();
+		transformers.add(transformerSpy);
+		return transformerSpy;
 	}
 
 	@Override
 	public void setAttribute(String arg0, Object arg1) {
-		// TODO Auto-generated method stub
-
+		attributes.put(arg0, arg1);
 	}
 
 	@Override
@@ -83,8 +99,7 @@ public class TransformerFactorySpy extends TransformerFactory {
 
 	@Override
 	public void setFeature(String arg0, boolean arg1) throws TransformerConfigurationException {
-		// TODO Auto-generated method stub
-
+		features.put(arg0, arg1);
 	}
 
 	@Override

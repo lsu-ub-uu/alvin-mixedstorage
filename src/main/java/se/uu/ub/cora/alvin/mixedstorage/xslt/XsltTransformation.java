@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -24,10 +25,10 @@ public class XsltTransformation {
 	}
 
 	public String transform(String inputXml) {
-		return tryToTrasnform(inputXml);
+		return tryToTransform(inputXml);
 	}
 
-	private String tryToTrasnform(String inputXml) {
+	private String tryToTransform(String inputXml) {
 		try {
 			return transformXmlUsingXslt(inputXml).trim();
 		} catch (Exception e) {
@@ -44,6 +45,8 @@ public class XsltTransformation {
 	private Transformer generateTransformer() throws Exception {
 		Source xslInput = new StreamSource(new StringReader(xslt));
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 		return transformerFactory.newTransformer(xslInput);
 	}
 
