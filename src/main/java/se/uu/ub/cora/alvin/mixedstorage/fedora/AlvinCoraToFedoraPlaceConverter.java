@@ -99,7 +99,8 @@ public class AlvinCoraToFedoraPlaceConverter implements AlvinCoraToFedoraConvert
 
 	@Override
 	public String toNewXML(DataGroup record) {
-		String newPlaceTemplate = ResourceReader.readResourceAsString("place/templatePlace.xml");
+		String newPlaceTemplate = ResourceReader
+				.readResourceAsString("alvinplace/templatePlace.xml");
 		parser = XMLXPathParser.forXML(newPlaceTemplate);
 		setStringFromDocumentUsingXPath("/place/pid", getIdFromRecord(record));
 		convertDefaultName(record);

@@ -46,7 +46,7 @@ public class AlvinIdGeneratorTest {
 		idGenerator = AlvinIdGenerator.usingHttpHandlerFactoryAndConnectionInfo(httpHandlerFactory,
 				idGeneratorConnectionInfo);
 		httpHandlerFactory.responseText = ResourceReader
-				.readResourceAsString("place/nextPlacePid.xml");
+				.readResourceAsString("alvinplace/nextPlacePid.xml");
 	}
 
 	@Test

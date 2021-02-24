@@ -9,6 +9,7 @@ module se.uu.ub.cora.alvin.mixedstorage {
 	requires se.uu.ub.cora.searchstorage;
 	requires se.uu.ub.cora.messaging;
 	requires se.uu.ub.cora.converter;
+	requires transitive se.uu.ub.cora.xmlutils;
 
 	exports se.uu.ub.cora.alvin.mixedstorage.db;
 	exports se.uu.ub.cora.alvin.mixedstorage.fedora;
@@ -25,6 +26,6 @@ module se.uu.ub.cora.alvin.mixedstorage {
 	provides se.uu.ub.cora.storage.MetadataStorageProvider
 			with se.uu.ub.cora.alvin.mixedstorage.AlvinMixedRecordStorageProvider;
 
-	opens place;
-	opens xslt;
+	opens alvinplace;
+	opens alvinxslt;
 }

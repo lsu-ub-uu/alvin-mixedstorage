@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019 Uppsala University Library
+ * Copyright 2018, 2019, 2021 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -45,8 +45,10 @@ public class AlvinFedoraToCoraConverterFactoryTest {
 
 	@Test
 	public void testFactoryPlace() throws Exception {
-		AlvinFedoraToCoraConverter converter = alvinToCoraConverterFactoryImp
+		AlvinFedoraToCoraPlaceConverter converter = (AlvinFedoraToCoraPlaceConverter) alvinToCoraConverterFactoryImp
 				.factorToCoraConverter("place");
+		
+		assertTrue()
 		assertTrue(converter instanceof AlvinFedoraToCoraPlaceConverter);
 	}
 

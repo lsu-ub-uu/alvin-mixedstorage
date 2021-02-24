@@ -12,9 +12,9 @@ import se.uu.ub.cora.alvin.mixedstorage.resource.ResourceReader;
 
 public class XslTransformationTest {
 
-	private static final String XSLT_FEDORA_TO_CORA_PLACE = "xslt/AlvinFedoraToCoraPlace.xsl";
-	private static final String XML_FEDORA_PLACE = "place/xmlFedoraAlvinPlace_679.xml";
-	private static final String XML_CORA_PLACE = "place/xmlCoraAlvinPlace_679.xml";
+	private static final String XSLT_FEDORA_TO_CORA_PLACE = "alvinxslt/AlvinFedoraToCoraPlace.xsl";
+	private static final String XML_FEDORA_PLACE = "alvinplace/xmlFedoraAlvinPlace_679.xml";
+	private static final String XML_CORA_PLACE = "alvinplace/xmlCoraAlvinPlace_679.xml";
 
 	@Test
 	public void testInitWithPXslt() throws Exception {

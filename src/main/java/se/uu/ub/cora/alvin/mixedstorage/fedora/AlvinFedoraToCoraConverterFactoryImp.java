@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019 Uppsala University Library
+ * Copyright 2018, 2019, 2021 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -36,7 +36,7 @@ public class AlvinFedoraToCoraConverterFactoryImp implements AlvinFedoraConverte
 	@Override
 	public AlvinFedoraToCoraConverter factorToCoraConverter(String type) {
 		if ("place".equals(type)) {
-			return new AlvinFedoraToCoraPlaceConverter();
+			return new AlvinFedoraToCoraPlaceConverter(null);
 		}
 		throw NotImplementedException.withMessage("No converter implemented for: " + type);
 	}

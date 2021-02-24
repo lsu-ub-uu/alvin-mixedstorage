@@ -47,7 +47,8 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 
 		HttpHandlerFactorySpy httpHandlerFactory = new HttpHandlerFactorySpy();
 		httpHandlerFactory.responseCodes.add(201);
-		httpHandlerFactory.responseTexts.add(ResourceReader.readResourceAsString("place/679.xml"));
+		httpHandlerFactory.responseTexts
+				.add(ResourceReader.readResourceAsString("alvinplace/679.xml"));
 
 		String fedoraURL = "someFedoraURL";
 		AlvinCoraToFedoraConverter converter = AlvinCoraToFedoraPlaceConverter
@@ -62,7 +63,7 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 		HttpHandlerSpy httpHandler = httpHandlerFactory.factoredHttpHandlers.get(0);
 		assertEquals(httpHandler.requestMethod, "GET");
 
-		assertEquals(xml, ResourceReader.readResourceAsString("place/expectedUpdated679.xml"));
+		assertEquals(xml, ResourceReader.readResourceAsString("alvinplace/expectedUpdated679.xml"));
 
 	}
 
@@ -106,7 +107,7 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 
 		String xml = converter.toNewXML(record);
 
-		assertEquals(xml, ResourceReader.readResourceAsString("place/expectedCreated680.xml"));
+		assertEquals(xml, ResourceReader.readResourceAsString("alvinplace/expectedCreated680.xml"));
 
 	}
 
