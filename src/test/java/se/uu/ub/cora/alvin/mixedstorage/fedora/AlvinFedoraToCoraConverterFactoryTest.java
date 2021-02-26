@@ -19,6 +19,8 @@
 package se.uu.ub.cora.alvin.mixedstorage.fedora;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.BeforeMethod;
@@ -30,11 +32,13 @@ import se.uu.ub.cora.httphandler.HttpHandlerFactoryImp;
 public class AlvinFedoraToCoraConverterFactoryTest {
 	private AlvinFedoraToCoraConverterFactoryImp alvinToCoraConverterFactoryImp;
 	private String fedoraURL = "someFedoraURL";
+	private TransformationFactorySpy transformationFactory;
 
 	@BeforeMethod
 	public void beforeMethod() {
+		transformationFactory = new TransformationFactorySpy();
 		alvinToCoraConverterFactoryImp = AlvinFedoraToCoraConverterFactoryImp
-				.usingFedoraURL(fedoraURL);
+				.usingFedoraURLAndTransformationFactory(fedoraURL, transformationFactory);
 	}
 
 	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
@@ -47,9 +51,9 @@ public class AlvinFedoraToCoraConverterFactoryTest {
 	public void testFactoryPlace() throws Exception {
 		AlvinFedoraToCoraPlaceConverter converter = (AlvinFedoraToCoraPlaceConverter) alvinToCoraConverterFactoryImp
 				.factorToCoraConverter("place");
-		
-		assertTrue()
-		assertTrue(converter instanceof AlvinFedoraToCoraPlaceConverter);
+		assertNotNull(converter.getCoraTransformation());
+		assertSame(converter.getCoraTransformation(), transformationFactory.transformationSpy);
+		assertEquals(transformationFactory.xsltPath, "alvinxslt/AlvinFedoraToCoraPlace.xsl");
 	}
 
 	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""

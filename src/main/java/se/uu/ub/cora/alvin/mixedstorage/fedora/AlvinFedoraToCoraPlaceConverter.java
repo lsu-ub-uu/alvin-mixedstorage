@@ -25,7 +25,6 @@ import se.uu.ub.cora.xmlutils.transformer.CoraTransformation;
 
 public class AlvinFedoraToCoraPlaceConverter implements AlvinFedoraToCoraConverter {
 
-	private static final String XSLT_PATH = "alvinxslt/AlvinFedoraToCoraPlace.xsl";
 	private CoraTransformation transformation;
 
 	public AlvinFedoraToCoraPlaceConverter(CoraTransformation transformation) {
@@ -41,5 +40,10 @@ public class AlvinFedoraToCoraPlaceConverter implements AlvinFedoraToCoraConvert
 	private DataGroup convertXMLToDataElement(String xmlString) {
 		Converter converter = ConverterProvider.getConverter("xml");
 		return (DataGroup) converter.convert(xmlString);
+	}
+
+	public CoraTransformation getCoraTransformation() {
+		// needed for test
+		return transformation;
 	}
 }

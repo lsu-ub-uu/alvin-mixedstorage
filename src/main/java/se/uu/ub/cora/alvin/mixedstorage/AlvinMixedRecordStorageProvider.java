@@ -46,6 +46,7 @@ import se.uu.ub.cora.storage.MetadataStorage;
 import se.uu.ub.cora.storage.MetadataStorageProvider;
 import se.uu.ub.cora.storage.RecordStorage;
 import se.uu.ub.cora.storage.RecordStorageProvider;
+import se.uu.ub.cora.xmlutils.transformer.XsltTransformationFactory;
 
 public class AlvinMixedRecordStorageProvider
 		implements RecordStorageProvider, MetadataStorageProvider {
@@ -109,8 +110,10 @@ public class AlvinMixedRecordStorageProvider
 	private FedoraRecordStorage createFedoraStorage() {
 		FedoraConfig fedoraConfig = createFedoraConfig();
 		HttpHandlerFactory httpHandlerFactory = new HttpHandlerFactoryImp();
+		XsltTransformationFactory transformationFactory = new XsltTransformationFactory();
+
 		AlvinFedoraConverterFactory converterFactory = AlvinFedoraToCoraConverterFactoryImp
-				.usingFedoraURL(fedoraConfig.baseUrl);
+				.usingFedoraURLAndTransformationFactory(fedoraConfig.baseUrl, transformationFactory);
 
 		return FedoraRecordStorage.usingHttpHandlerFactoryAndConverterFactoryAndFedoraConfig(
 				httpHandlerFactory, converterFactory, fedoraConfig);

@@ -39,7 +39,6 @@ import org.testng.annotations.Test;
 
 import se.uu.ub.cora.alvin.mixedstorage.db.AlvinDbToCoraConverterFactoryImp;
 import se.uu.ub.cora.alvin.mixedstorage.db.AlvinDbToCoraRecordStorage;
-import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraConverterFactory;
 import se.uu.ub.cora.alvin.mixedstorage.fedora.AlvinFedoraToCoraConverterFactoryImp;
 import se.uu.ub.cora.alvin.mixedstorage.fedora.FedoraRecordStorage;
 import se.uu.ub.cora.alvin.mixedstorage.fedora.IndexMessageInfo;
@@ -58,6 +57,7 @@ import se.uu.ub.cora.sqldatabase.RecordReaderFactoryImp;
 import se.uu.ub.cora.storage.MetadataStorage;
 import se.uu.ub.cora.storage.MetadataStorageProvider;
 import se.uu.ub.cora.storage.RecordStorage;
+import se.uu.ub.cora.xmlutils.transformer.XsltTransformationFactory;
 
 public class AlvinMixedRecordStorageProviderTest {
 	private Map<String, String> initInfo = new HashMap<>();
@@ -161,12 +161,12 @@ public class AlvinMixedRecordStorageProviderTest {
 		FedoraRecordStorage fedoraToCoraStorage = (FedoraRecordStorage) fedoraStorage;
 		assertTrue(fedoraToCoraStorage.getHttpHandlerFactory() instanceof HttpHandlerFactoryImp);
 
-		AlvinFedoraConverterFactory alvinFedoraConverterFactory = fedoraToCoraStorage
+		AlvinFedoraToCoraConverterFactoryImp alvinFedoraConverterFactory = (AlvinFedoraToCoraConverterFactoryImp) fedoraToCoraStorage
 				.getAlvinFedoraConverterFactory();
-		assertTrue(alvinFedoraConverterFactory instanceof AlvinFedoraToCoraConverterFactoryImp);
-		String fedoraURLInConverter = ((AlvinFedoraToCoraConverterFactoryImp) alvinFedoraConverterFactory)
-				.getFedoraURL();
+		String fedoraURLInConverter = alvinFedoraConverterFactory.getFedoraURL();
 		assertEquals(fedoraURLInConverter, initInfo.get("fedoraURL"));
+		assertTrue(alvinFedoraConverterFactory
+				.getCoraTransformerFactory() instanceof XsltTransformationFactory);
 
 		String baseURLInFedoraToCoraStorage = fedoraToCoraStorage.getBaseURL();
 		assertEquals(baseURLInFedoraToCoraStorage, initInfo.get("fedoraURL"));

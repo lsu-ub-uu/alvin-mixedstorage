@@ -20,23 +20,31 @@ package se.uu.ub.cora.alvin.mixedstorage.fedora;
 
 import se.uu.ub.cora.alvin.mixedstorage.NotImplementedException;
 import se.uu.ub.cora.httphandler.HttpHandlerFactoryImp;
+import se.uu.ub.cora.xmlutils.transformer.CoraTransformation;
+import se.uu.ub.cora.xmlutils.transformer.CoraTransformationFactory;
 
 public class AlvinFedoraToCoraConverterFactoryImp implements AlvinFedoraConverterFactory {
 
+	private static final String XSLT_PATH = "alvinxslt/AlvinFedoraToCoraPlace.xsl";
 	private String fedoraURL;
+	private CoraTransformationFactory transformationFactory;
 
-	public static AlvinFedoraToCoraConverterFactoryImp usingFedoraURL(String fedoraURL) {
-		return new AlvinFedoraToCoraConverterFactoryImp(fedoraURL);
+	public static AlvinFedoraToCoraConverterFactoryImp usingFedoraURLAndTransformationFactory(String fedoraURL,
+			CoraTransformationFactory transformationFactory) {
+		return new AlvinFedoraToCoraConverterFactoryImp(fedoraURL, transformationFactory);
 	}
 
-	private AlvinFedoraToCoraConverterFactoryImp(String fedoraURL) {
+	private AlvinFedoraToCoraConverterFactoryImp(String fedoraURL,
+			CoraTransformationFactory transformationFactory) {
 		this.fedoraURL = fedoraURL;
+		this.transformationFactory = transformationFactory;
 	}
 
 	@Override
 	public AlvinFedoraToCoraConverter factorToCoraConverter(String type) {
 		if ("place".equals(type)) {
-			return new AlvinFedoraToCoraPlaceConverter(null);
+			CoraTransformation transformation = transformationFactory.factor(XSLT_PATH);
+			return new AlvinFedoraToCoraPlaceConverter(transformation);
 		}
 		throw NotImplementedException.withMessage("No converter implemented for: " + type);
 	}
@@ -57,7 +65,12 @@ public class AlvinFedoraToCoraConverterFactoryImp implements AlvinFedoraConverte
 	}
 
 	public String getFedoraURL() {
-		// needed for tests
+		// needed for test
 		return fedoraURL;
+	}
+
+	public CoraTransformationFactory getCoraTransformerFactory() {
+		// needed for test
+		return transformationFactory;
 	}
 }
