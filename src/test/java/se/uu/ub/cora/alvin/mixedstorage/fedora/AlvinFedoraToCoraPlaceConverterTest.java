@@ -35,6 +35,8 @@ import se.uu.ub.cora.data.DataAttribute;
 import se.uu.ub.cora.data.DataGroup;
 import se.uu.ub.cora.data.DataGroupFactory;
 import se.uu.ub.cora.data.DataGroupProvider;
+import se.uu.ub.cora.data.DataRecordLinkFactory;
+import se.uu.ub.cora.data.DataRecordLinkProvider;
 import se.uu.ub.cora.logger.LoggerProvider;
 
 public class AlvinFedoraToCoraPlaceConverterTest {
@@ -42,6 +44,7 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 	private AlvinFedoraToCoraPlaceConverter converter;
 	private DataGroupFactory dataGroupFactory;
 	private DataAtomicFactory dataAtomicFactory;
+	private DataRecordLinkFactory dataRecordLinkFactory;
 	private LoggerFactorySpy loggerFactorySpy;
 
 	@BeforeMethod
@@ -50,6 +53,8 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		LoggerProvider.setLoggerFactory(loggerFactorySpy);
 		dataGroupFactory = new DataGroupFactorySpy();
 		DataGroupProvider.setDataGroupFactory(dataGroupFactory);
+		dataRecordLinkFactory = new DataRecordLinkFactorySpy();
+		DataRecordLinkProvider.setDataRecordLinkFactory(dataRecordLinkFactory);
 		dataAtomicFactory = new DataAtomicFactorySpy();
 		DataAtomicProvider.setDataAtomicFactory(dataAtomicFactory);
 		converter = new AlvinFedoraToCoraPlaceConverter();
