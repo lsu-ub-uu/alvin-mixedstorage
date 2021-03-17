@@ -20,6 +20,7 @@ package se.uu.ub.cora.alvin.mixedstorage.fedora;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -35,7 +36,6 @@ import se.uu.ub.cora.data.DataAttribute;
 import se.uu.ub.cora.data.DataGroup;
 import se.uu.ub.cora.data.DataGroupFactory;
 import se.uu.ub.cora.data.DataGroupProvider;
-import se.uu.ub.cora.data.DataRecordLinkFactory;
 import se.uu.ub.cora.data.DataRecordLinkProvider;
 import se.uu.ub.cora.logger.LoggerProvider;
 
@@ -44,7 +44,7 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 	private AlvinFedoraToCoraPlaceConverter converter;
 	private DataGroupFactory dataGroupFactory;
 	private DataAtomicFactory dataAtomicFactory;
-	private DataRecordLinkFactory dataRecordLinkFactory;
+	private DataRecordLinkFactorySpy dataRecordLinkFactory;
 	private LoggerFactorySpy loggerFactorySpy;
 
 	@BeforeMethod
@@ -69,19 +69,23 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		assertEquals(attributeValueForType, "place");
 
 		DataGroup recordInfo = placeDataGroup.getFirstGroupWithNameInData("recordInfo");
-		DataGroup type = recordInfo.getFirstGroupWithNameInData("type");
-		assertEquals(type.getFirstAtomicValueWithNameInData("linkedRecordType"), "recordType");
-		assertEquals(type.getFirstAtomicValueWithNameInData("linkedRecordId"), "place");
 
-		DataGroup dataDivider = recordInfo.getFirstGroupWithNameInData("dataDivider");
-		assertEquals(dataDivider.getFirstAtomicValueWithNameInData("linkedRecordType"), "system");
-		assertEquals(dataDivider.getFirstAtomicValueWithNameInData("linkedRecordId"), "alvin");
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("type"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(0), "type");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(0), "recordType");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(0), "place");
+
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("dataDivider"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(2), "dataDivider");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(2), "system");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(2), "alvin");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("id"), "alvin-place:22");
 
-		DataGroup createdBy = recordInfo.getFirstGroupWithNameInData("createdBy");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordType"), "user");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordId"), "12345");
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("createdBy"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(1), "createdBy");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(1), "user");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(1), "12345");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("tsCreated"),
 				"2014-12-18T20:20:38.346000Z");
@@ -111,23 +115,27 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 	}
 
 	@Test
-	public void convertFnromXML24() throws Exception {
+	public void convertFromXML24() throws Exception {
 		DataGroup placeDataGroup = converter.fromXML(TestDataProvider.place24XML);
 		assertEquals(placeDataGroup.getNameInData(), "authority");
 		DataGroup recordInfo = placeDataGroup.getFirstGroupWithNameInData("recordInfo");
-		DataGroup type = recordInfo.getFirstGroupWithNameInData("type");
-		assertEquals(type.getFirstAtomicValueWithNameInData("linkedRecordType"), "recordType");
-		assertEquals(type.getFirstAtomicValueWithNameInData("linkedRecordId"), "place");
 
-		DataGroup dataDivider = recordInfo.getFirstGroupWithNameInData("dataDivider");
-		assertEquals(dataDivider.getFirstAtomicValueWithNameInData("linkedRecordType"), "system");
-		assertEquals(dataDivider.getFirstAtomicValueWithNameInData("linkedRecordId"), "alvin");
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("type"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(0), "type");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(0), "recordType");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(0), "place");
+
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("dataDivider"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(2), "dataDivider");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(2), "system");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(2), "alvin");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("id"), "alvin-place:24");
 
-		DataGroup createdBy = recordInfo.getFirstGroupWithNameInData("createdBy");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordType"), "user");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordId"), "12345");
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("createdBy"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(1), "createdBy");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(1), "user");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(1), "12345");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("tsCreated"),
 				"2014-12-18T22:16:44.623000Z");
@@ -160,9 +168,10 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 			String tsUpdated) {
 		assertEquals(updated.getRepeatId(), repeatId);
 
-		DataGroup updatedBy = updated.getFirstGroupWithNameInData("updatedBy");
-		assertEquals(updatedBy.getFirstAtomicValueWithNameInData("linkedRecordType"), "user");
-		assertEquals(updatedBy.getFirstAtomicValueWithNameInData("linkedRecordId"), "12345");
+		assertNotNull(updated.getFirstGroupWithNameInData("updatedBy"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(3), "updatedBy");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(3), "user");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(3), "12345");
 
 		assertEquals(updated.getFirstAtomicValueWithNameInData("tsUpdated"), tsUpdated);
 	}
@@ -172,19 +181,23 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 		DataGroup placeDataGroup = converter.fromXML(TestDataProvider.place22_noCountry_XML);
 		assertEquals(placeDataGroup.getNameInData(), "authority");
 		DataGroup recordInfo = placeDataGroup.getFirstGroupWithNameInData("recordInfo");
-		DataGroup type = recordInfo.getFirstGroupWithNameInData("type");
-		assertEquals(type.getFirstAtomicValueWithNameInData("linkedRecordType"), "recordType");
-		assertEquals(type.getFirstAtomicValueWithNameInData("linkedRecordId"), "place");
 
-		DataGroup dataDivider = recordInfo.getFirstGroupWithNameInData("dataDivider");
-		assertEquals(dataDivider.getFirstAtomicValueWithNameInData("linkedRecordType"), "system");
-		assertEquals(dataDivider.getFirstAtomicValueWithNameInData("linkedRecordId"), "alvin");
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("type"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(0), "type");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(0), "recordType");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(0), "place");
+
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("dataDivider"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(2), "dataDivider");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(2), "system");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(2), "alvin");
+
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("createdBy"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(1), "createdBy");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(1), "user");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(1), "12345");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("id"), "alvin-place:22_2");
-
-		DataGroup createdBy = recordInfo.getFirstGroupWithNameInData("createdBy");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordType"), "user");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordId"), "12345");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("tsCreated"),
 				"2014-12-18T20:20:38.346000Z");
@@ -308,9 +321,10 @@ public class AlvinFedoraToCoraPlaceConverterTest {
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("id"), "alvin-place:5");
 
-		DataGroup createdBy = recordInfo.getFirstGroupWithNameInData("createdBy");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordType"), "user");
-		assertEquals(createdBy.getFirstAtomicValueWithNameInData("linkedRecordId"), "12345");
+		assertNotNull(recordInfo.getFirstGroupWithNameInData("createdBy"));
+		assertEquals(dataRecordLinkFactory.usedNameInDatas.get(1), "createdBy");
+		assertEquals(dataRecordLinkFactory.usedRecordTypes.get(1), "user");
+		assertEquals(dataRecordLinkFactory.usedRecordIds.get(1), "12345");
 
 		assertEquals(recordInfo.getFirstAtomicValueWithNameInData("tsCreated"),
 				"2017-10-27T22:36:51.991000Z");

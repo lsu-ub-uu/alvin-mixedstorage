@@ -27,6 +27,8 @@ import se.uu.ub.cora.data.DataRecordLinkFactory;
 public class DataRecordLinkFactorySpy implements DataRecordLinkFactory {
 
 	public List<String> usedNameInDatas = new ArrayList<>();
+	public List<String> usedRecordTypes = new ArrayList<>();
+	public List<String> usedRecordIds = new ArrayList<>();
 
 	@Override
 	public DataRecordLink factorUsingNameInData(String nameInData) {
@@ -38,6 +40,8 @@ public class DataRecordLinkFactorySpy implements DataRecordLinkFactory {
 	public DataRecordLink factorAsLinkWithNameInDataTypeAndId(String nameInData, String recordType,
 			String recordId) {
 		usedNameInDatas.add(nameInData);
+		usedRecordTypes.add(recordType);
+		usedRecordIds.add(recordId);
 		return new DataRecordLinkSpy(nameInData, recordType, recordId);
 	}
 
