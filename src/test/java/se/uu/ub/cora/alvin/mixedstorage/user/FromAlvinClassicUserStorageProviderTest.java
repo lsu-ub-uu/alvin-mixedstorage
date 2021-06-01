@@ -56,7 +56,7 @@ import se.uu.ub.cora.sqldatabase.DataReaderImp;
 import se.uu.ub.cora.storage.testdata.TestDataAppTokenStorage;
 
 public class FromAlvinClassicUserStorageProviderTest {
-	private String basePath = "/tmp/recordStorageOnDiskTemp/";
+	private String basePath = "/tmp/fromAlvinClassicRecordStorageOnDiskTemp/";
 	private Map<String, String> initInfo;
 	private LoggerFactorySpy loggerFactorySpy;
 	private String testedClassName = "FromAlvinClassicUserStorageProvider";
