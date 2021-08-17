@@ -64,7 +64,7 @@ public class AlvinMixedUserStorage implements UserStorage {
 	}
 
 	private void logAndThrowExceptionIfUnexpectedFormatOf(String idFromLogin) {
-		if (!idFromLogin.matches("^\\w+@(\\w+\\.){1,}\\w+$")) {
+		if (!idFromLogin.matches("^\\w+@(\\w+\\.){1,9}\\w+$")) {
 			String errorMessage = "Unrecognized format of userIdFromLogin: " + idFromLogin;
 			log.logErrorUsingMessage(errorMessage);
 			throw UserException.withMessage(errorMessage);

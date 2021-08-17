@@ -131,6 +131,20 @@ public class AlvinMixedUserStorageTest {
 		alvinMixedUserStorage.getUserByIdFromLogin("userId@somedomainorg");
 	}
 
+	@Test(expectedExceptions = UserException.class, expectedExceptionsMessageRegExp = ""
+			+ "Unrecognized format of userIdFromLogin: userId@one.two.three.four.five.six.seven.eight.nine.ten.eleven")
+	public void testUnexpectedFormatOfUserIdFromLoginMoreThen10WordsInDomain() {
+		alvinMixedUserStorage.getUserByIdFromLogin(
+				"userId@one.two.three.four.five.six.seven.eight.nine.ten.eleven");
+	}
+
+	@Test(expectedExceptions = RecordNotFoundException.class, expectedExceptionsMessageRegExp = ""
+			+ "No user found for login: userId@one.two.three.four.five.six.seven.eight.nine.ten")
+	public void testUserNotFoundFromLoginNotFoundForManyWords() {
+		alvinMixedUserStorage
+				.getUserByIdFromLogin("userId@one.two.three.four.five.six.seven.eight.nine.ten");
+	}
+
 	@Test
 	public void testUnexpectedFormatOfUserIdFromLoginIsLogged() {
 		try {
