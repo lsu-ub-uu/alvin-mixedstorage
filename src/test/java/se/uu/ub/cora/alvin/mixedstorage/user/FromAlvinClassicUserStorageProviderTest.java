@@ -45,6 +45,7 @@ import se.uu.ub.cora.connection.ContextConnectionProviderImp;
 import se.uu.ub.cora.connection.SqlConnectionProvider;
 import se.uu.ub.cora.data.DataGroupFactory;
 import se.uu.ub.cora.data.DataGroupProvider;
+import se.uu.ub.cora.data.converter.DataToJsonConverterFactoryCreator;
 import se.uu.ub.cora.data.converter.DataToJsonConverterProvider;
 import se.uu.ub.cora.data.converter.JsonToDataConverterFactory;
 import se.uu.ub.cora.data.converter.JsonToDataConverterProvider;
@@ -63,7 +64,7 @@ public class FromAlvinClassicUserStorageProviderTest {
 	private UserStorageProvider userStorageProvider;
 	private DataGroupFactory dataGroupFactory;
 	private DataCopierFactory dataCopierFactory;
-	private DataToJsonConverterFactorySpy dataToJsonConverterFactory;
+	private DataToJsonConverterFactoryCreator converterFactoryCreator;
 	private JsonToDataConverterFactory jsonToDataConverterFactory;
 
 	@BeforeMethod
@@ -74,8 +75,8 @@ public class FromAlvinClassicUserStorageProviderTest {
 		DataGroupProvider.setDataGroupFactory(dataGroupFactory);
 		dataCopierFactory = new DataCopierFactorySpy();
 		DataCopierProvider.setDataCopierFactory(dataCopierFactory);
-		dataToJsonConverterFactory = new DataToJsonConverterFactorySpy();
-		DataToJsonConverterProvider.setDataToJsonConverterFactory(dataToJsonConverterFactory);
+		converterFactoryCreator = new DataToJsonConverterFactoryCreatorSpy();
+		DataToJsonConverterProvider.setDataToJsonConverterFactoryCreator(converterFactoryCreator);
 		jsonToDataConverterFactory = new JsonToDataConverterFactorySpy();
 		JsonToDataConverterProvider.setJsonToDataConverterFactory(jsonToDataConverterFactory);
 		File dir = new File(basePath);

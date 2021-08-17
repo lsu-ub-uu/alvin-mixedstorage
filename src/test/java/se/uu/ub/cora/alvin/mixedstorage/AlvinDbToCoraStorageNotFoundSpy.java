@@ -1,6 +1,7 @@
 package se.uu.ub.cora.alvin.mixedstorage;
 
 import java.util.Collection;
+import java.util.List;
 
 import se.uu.ub.cora.data.DataGroup;
 import se.uu.ub.cora.storage.RecordNotFoundException;
@@ -67,11 +68,11 @@ public class AlvinDbToCoraStorageNotFoundSpy implements RecordStorage {
 		return null;
 	}
 
-	@Override
-	public boolean recordsExistForRecordType(String type) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	// @Override
+	// public boolean recordsExistForRecordType(String type) {
+	// // TODO Auto-generated method stub
+	// return false;
+	// }
 
 	@Override
 	public boolean recordExistsForAbstractOrImplementingRecordTypeAndRecordId(String type,
@@ -81,6 +82,19 @@ public class AlvinDbToCoraStorageNotFoundSpy implements RecordStorage {
 		data.calledMethod = "recordExistsForAbstractOrImplementingRecordTypeAndRecordId";
 		data.answer = false;
 		return false;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForAbstractType(String arg0, List<String> arg1,
+			DataGroup arg2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForType(String arg0, DataGroup arg1) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

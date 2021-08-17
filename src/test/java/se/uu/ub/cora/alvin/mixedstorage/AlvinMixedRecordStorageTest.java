@@ -25,6 +25,9 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -386,18 +389,6 @@ public class AlvinMixedRecordStorageTest {
 	}
 
 	@Test
-	public void recordsExistForRecordTypeGoesToBasicStorage() throws Exception {
-		RecordStorageSpyData expectedData = new RecordStorageSpyData();
-		expectedData.type = "someType";
-		expectedData.answer = alvinMixedRecordStorage.recordsExistForRecordType(expectedData.type);
-
-		expectedData.calledMethod = "recordsExistForRecordType";
-		assertExpectedDataSameAsInStorageSpy(basicStorage, expectedData);
-		assertNoInteractionWithStorage(alvinFedoraToCoraStorage);
-		assertNoInteractionWithStorage(alvinDbToCoraStorage);
-	}
-
-	@Test
 	public void recordExistsForAbstractOrImplementingRecordTypeAndRecordIdGoesToBasicStorage()
 			throws Exception {
 		RecordStorageSpyData expectedData = new RecordStorageSpyData();
@@ -530,4 +521,36 @@ public class AlvinMixedRecordStorageTest {
 		assertEquals(basicStorage.indexTermId, "someIndexTermId");
 		assertSame(searchTerm, basicStorage.returnedIndexTerm);
 	}
+
+	@Test
+	public void testTotalNumberOfRecordsForAbstractType() throws Exception {
+		basicStorage.totalNumberOfRectorsForAbstractType = 32;
+
+		String abstractType = "abstractType";
+		List<String> implementingTypes = Collections.emptyList();
+		DataGroupSpy filter = new DataGroupSpy("filter");
+
+		long total = alvinMixedRecordStorage.getTotalNumberOfRecordsForAbstractType(abstractType,
+				implementingTypes, filter);
+
+		basicStorage.MCR.assertParameters("getTotalNumberOfRecordsForAbstractType", 0, abstractType,
+				implementingTypes, filter);
+		basicStorage.MCR.assertReturn("getTotalNumberOfRecordsForAbstractType", 0, total);
+
+	}
+
+	@Test
+	public void testTotalNumberOfRecordsForType() throws Exception {
+		basicStorage.totalNumberOfRectorsForType = 64;
+
+		String type = "type";
+		DataGroupSpy filter = new DataGroupSpy("filter");
+
+		long total = alvinMixedRecordStorage.getTotalNumberOfRecordsForType(type, filter);
+
+		basicStorage.MCR.assertParameters("getTotalNumberOfRecordsForType", 0, type, filter);
+		basicStorage.MCR.assertReturn("getTotalNumberOfRecordsForType", 0, total);
+
+	}
+
 }

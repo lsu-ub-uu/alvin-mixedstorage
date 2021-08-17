@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import se.uu.ub.cora.alvin.mixedstorage.mcr.MethodCallRecorder;
 import se.uu.ub.cora.data.DataGroup;
 import se.uu.ub.cora.searchstorage.SearchStorage;
 import se.uu.ub.cora.storage.RecordStorage;
@@ -15,6 +16,10 @@ public class RecordStorageSpy implements RecordStorage, SearchStorage {
 	public DataGroup returnedSearchTerm = new DataGroupSpy("searchTerm");
 	public String indexTermId;
 	public DataGroup returnedIndexTerm = new DataGroupSpy("indexTerm");
+
+	MethodCallRecorder MCR = new MethodCallRecorder();
+	public long totalNumberOfRectorsForAbstractType = 0;
+	public int totalNumberOfRectorsForType = 0;
 
 	@Override
 	public DataGroup read(String type, String id) {
@@ -120,14 +125,6 @@ public class RecordStorageSpy implements RecordStorage, SearchStorage {
 	}
 
 	@Override
-	public boolean recordsExistForRecordType(String type) {
-		data.type = type;
-		data.calledMethod = "recordsExistForRecordType";
-		data.answer = false;
-		return false;
-	}
-
-	@Override
 	public boolean recordExistsForAbstractOrImplementingRecordTypeAndRecordId(String type,
 			String id) {
 		data.type = type;
@@ -150,6 +147,23 @@ public class RecordStorageSpy implements RecordStorage, SearchStorage {
 	public DataGroup getCollectIndexTerm(String collectIndexTermId) {
 		indexTermId = collectIndexTermId;
 		return returnedIndexTerm;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForType(String type, DataGroup filter) {
+		MCR.addCall("type", type, "filter", filter);
+		long total = 0;
+		MCR.addReturned(total);
+		return total;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForAbstractType(String abstractType,
+			List<String> implementingTypes, DataGroup filter) {
+		MCR.addCall("abstractType", abstractType, "implementingTypes", implementingTypes, "filter",
+				filter);
+		MCR.addReturned(totalNumberOfRectorsForAbstractType);
+		return totalNumberOfRectorsForAbstractType;
 	}
 
 }

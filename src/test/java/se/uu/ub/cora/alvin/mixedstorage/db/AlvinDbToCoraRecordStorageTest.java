@@ -23,6 +23,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -215,12 +216,6 @@ public class AlvinDbToCoraRecordStorageTest {
 	}
 
 	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
-			+ "recordsExistForRecordType is not implemented")
-	public void recordsExistForRecordTypeThrowsNotImplementedException() throws Exception {
-		alvinToCoraRecordStorage.recordsExistForRecordType(null);
-	}
-
-	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
 			+ "recordExistsForAbstractOrImplementingRecordTypeAndRecordId is not implemented for notUser")
 	public void recordExistsForAbstractOrImplementingRecordTypeAndRecordIdThrowsNotImplementedException()
 			throws Exception {
@@ -252,6 +247,23 @@ public class AlvinDbToCoraRecordStorageTest {
 		assertEquals(recordReaderFactory.factored.usedTableName, "alvin_seam_user");
 		assertEquals(recordReaderFactory.factored.usedConditions.get("id"), 60000);
 		assertFalse(userExists);
+	}
+
+	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
+			+ "getTotalNumberOfRecordsForType is not implemented for someType")
+	public void getTotalNumberOfRecordsForTypeThrowsNotImplementedException() throws Exception {
+		DataGroup filter = new DataGroupSpy("someGroup");
+		alvinToCoraRecordStorage.getTotalNumberOfRecordsForType("someType", filter);
+	}
+
+	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
+			+ "getTotalNumberOfRecordsForAbstractType is not implemented for someAbstractType")
+	public void getTotalNumberOfRecordsForAbstractTypeThrowsNotImplementedException()
+			throws Exception {
+		DataGroup filter = new DataGroupSpy("someGroup");
+		List<String> emptyList = Collections.emptyList();
+		alvinToCoraRecordStorage.getTotalNumberOfRecordsForAbstractType("someAbstractType",
+				emptyList, filter);
 	}
 
 }

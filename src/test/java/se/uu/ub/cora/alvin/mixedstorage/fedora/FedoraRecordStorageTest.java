@@ -26,7 +26,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -600,16 +602,27 @@ public class FedoraRecordStorageTest {
 	}
 
 	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
-			+ "recordsExistForRecordType is not implemented")
-	public void recordsExistForRecordTypeThrowsNotImplementedException() throws Exception {
-		alvinToCoraRecordStorage.recordsExistForRecordType(null);
-	}
-
-	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
 			+ "recordExistsForAbstractOrImplementingRecordTypeAndRecordId is not implemented")
 	public void recordExistsForAbstractOrImplementingRecordTypeAndRecordIdThrowsNotImplementedException()
 			throws Exception {
 		alvinToCoraRecordStorage.recordExistsForAbstractOrImplementingRecordTypeAndRecordId(null,
 				null);
+	}
+
+	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
+			+ "getTotalNumberOfRecordsForType is not implemented for someType")
+	public void getTotalNumberOfRecordsForTypeThrowsNotImplementedException() throws Exception {
+		DataGroup filter = new DataGroupSpy("someGroup");
+		alvinToCoraRecordStorage.getTotalNumberOfRecordsForType("someType", filter);
+	}
+
+	@Test(expectedExceptions = NotImplementedException.class, expectedExceptionsMessageRegExp = ""
+			+ "getTotalNumberOfRecordsForAbstractType is not implemented for someAbstractType")
+	public void getTotalNumberOfRecordsForAbstractTypeThrowsNotImplementedException()
+			throws Exception {
+		DataGroup filter = new DataGroupSpy("someGroup");
+		List<String> emptyList = Collections.emptyList();
+		alvinToCoraRecordStorage.getTotalNumberOfRecordsForAbstractType("someAbstractType",
+				emptyList, filter);
 	}
 }

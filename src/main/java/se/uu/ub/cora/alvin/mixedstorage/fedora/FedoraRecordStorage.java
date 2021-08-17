@@ -405,11 +405,6 @@ public final class FedoraRecordStorage implements RecordStorage {
 	}
 
 	@Override
-	public boolean recordsExistForRecordType(String type) {
-		throw NotImplementedException.withMessage("recordsExistForRecordType is not implemented");
-	}
-
-	@Override
 	public boolean recordExistsForAbstractOrImplementingRecordTypeAndRecordId(String type,
 			String id) {
 		throw NotImplementedException.withMessage(
@@ -439,6 +434,21 @@ public final class FedoraRecordStorage implements RecordStorage {
 	public String getFedoraPassword() {
 		// needed for test
 		return fedoraPassword;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForType(String type, DataGroup filter) {
+		throw NotImplementedException
+				.withMessage("getTotalNumberOfRecordsForType is not implemented for " + type);
+
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForAbstractType(String abstractType,
+			List<String> implementingTypes, DataGroup filter) {
+		throw NotImplementedException.withMessage(
+				"getTotalNumberOfRecordsForAbstractType is not implemented for " + abstractType);
+		// return 0;
 	}
 
 }

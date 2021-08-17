@@ -18,17 +18,29 @@
  */
 package se.uu.ub.cora.alvin.mixedstorage.user;
 
-import se.uu.ub.cora.data.DataPart;
+import se.uu.ub.cora.data.Convertible;
 import se.uu.ub.cora.data.converter.DataToJsonConverter;
 import se.uu.ub.cora.data.converter.DataToJsonConverterFactory;
-import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 
 public class DataToJsonConverterFactorySpy implements DataToJsonConverterFactory {
 
+	DataToJsonConverterSpy dataToJsonConverterSpy = new DataToJsonConverterSpy();
+
 	@Override
-	public DataToJsonConverter createForDataElement(JsonBuilderFactory factory, DataPart dataPart) {
-		// TODO Auto-generated method stub
-		return new DataToJsonConverterSpy();
+	public DataToJsonConverter factorUsingConvertible(Convertible convertible) {
+		return dataToJsonConverterSpy;
+	}
+
+	@Override
+	public DataToJsonConverter factorUsingBaseUrlAndConvertible(String baseUrl,
+			Convertible convertible) {
+		return dataToJsonConverterSpy;
+	}
+
+	@Override
+	public DataToJsonConverter factorUsingBaseUrlAndRecordUrlAndConvertible(String baseUrl,
+			String recordUrl, Convertible convertible) {
+		return dataToJsonConverterSpy;
 	}
 
 }

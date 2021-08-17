@@ -19,6 +19,7 @@
 package se.uu.ub.cora.alvin.mixedstorage;
 
 import java.util.Collection;
+import java.util.List;
 
 import se.uu.ub.cora.alvin.mixedstorage.fedora.IndexMessageInfo;
 import se.uu.ub.cora.data.DataGroup;
@@ -168,11 +169,6 @@ public final class AlvinMixedRecordStorage implements RecordStorage, SearchStora
 	}
 
 	@Override
-	public boolean recordsExistForRecordType(String type) {
-		return basicStorage.recordsExistForRecordType(type);
-	}
-
-	@Override
 	public boolean recordExistsForAbstractOrImplementingRecordTypeAndRecordId(String type,
 			String id) {
 		if ("user".equals(type)) {
@@ -228,6 +224,18 @@ public final class AlvinMixedRecordStorage implements RecordStorage, SearchStora
 	public RecordIndexerFactory getRecordIndexFactory() {
 		// needed for test
 		return recordIndexFactory;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForAbstractType(String abstractType,
+			List<String> implementingTypes, DataGroup filter) {
+		return basicStorage.getTotalNumberOfRecordsForAbstractType(abstractType, implementingTypes,
+				filter);
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForType(String type, DataGroup filter) {
+		return basicStorage.getTotalNumberOfRecordsForType(type, filter);
 	}
 
 }

@@ -159,11 +159,6 @@ public final class AlvinDbToCoraRecordStorage implements RecordStorage {
 	}
 
 	@Override
-	public boolean recordsExistForRecordType(String type) {
-		throw NotImplementedException.withMessage("recordsExistForRecordType is not implemented");
-	}
-
-	@Override
 	public boolean recordExistsForAbstractOrImplementingRecordTypeAndRecordId(String type,
 			String id) {
 		if ("user".equals(type)) {
@@ -192,6 +187,19 @@ public final class AlvinDbToCoraRecordStorage implements RecordStorage {
 	public RecordReaderFactory getRecordReaderFactory() {
 		// needed for test
 		return recordReaderFactory;
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForType(String type, DataGroup filter) {
+		throw NotImplementedException
+				.withMessage("getTotalNumberOfRecordsForType is not implemented for " + type);
+	}
+
+	@Override
+	public long getTotalNumberOfRecordsForAbstractType(String abstractType,
+			List<String> implementingTypes, DataGroup filter) {
+		throw NotImplementedException.withMessage(
+				"getTotalNumberOfRecordsForAbstractType is not implemented for " + abstractType);
 	}
 
 }
