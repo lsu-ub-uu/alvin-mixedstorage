@@ -103,7 +103,7 @@ public class AlvinMixedRecordStorageTest {
 		RecordStorageSpyData spyData = recordStorageSpy.data;
 		assertCorrectSpyData(data, spyData);
 		assertEquals(spyData.filter, data.filter);
-		assertEquals(spyData.record, data.record);
+		assertEquals(spyData.dataRecord, data.dataRecord);
 		assertEquals(spyData.collectedTerms, data.collectedTerms);
 		assertEquals(spyData.linkList, data.linkList);
 		assertEquals(spyData.dataDivider, data.dataDivider);
@@ -189,11 +189,11 @@ public class AlvinMixedRecordStorageTest {
 		RecordStorageSpyData expectedData = new RecordStorageSpyData();
 		expectedData.type = "someType";
 		expectedData.id = "someId";
-		expectedData.record = new DataGroupSpy("dummyRecord");
+		expectedData.dataRecord = new DataGroupSpy("dummyRecord");
 		expectedData.collectedTerms = new DataGroupSpy("collectedTerms");
 		expectedData.linkList = new DataGroupSpy("linkList");
 		expectedData.dataDivider = "someDataDivider";
-		alvinMixedRecordStorage.create(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.create(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 
 		expectedData.calledMethod = "create";
@@ -206,7 +206,7 @@ public class AlvinMixedRecordStorageTest {
 	public void createPlaceGoesToAlvinToCoraStorage() throws Exception {
 		RecordStorageSpyData expectedData = new RecordStorageSpyData();
 		expectedData.type = "place";
-		alvinMixedRecordStorage.create(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.create(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 
 		expectedData.calledMethod = "create";
@@ -260,11 +260,11 @@ public class AlvinMixedRecordStorageTest {
 		RecordStorageSpyData expectedData = new RecordStorageSpyData();
 		expectedData.type = "someType";
 		expectedData.id = "someId";
-		expectedData.record = new DataGroupSpy("dummyRecord");
+		expectedData.dataRecord = new DataGroupSpy("dummyRecord");
 		expectedData.collectedTerms = new DataGroupSpy("collectedTerms");
 		expectedData.linkList = new DataGroupSpy("linkList");
 		expectedData.dataDivider = "someDataDivider";
-		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 
 		expectedData.calledMethod = "update";
@@ -276,7 +276,7 @@ public class AlvinMixedRecordStorageTest {
 	@Test
 	public void updatePlaceGoesToFedoraStorage() throws Exception {
 		RecordStorageSpyData expectedData = setUpExpectedData();
-		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 
 		expectedData.calledMethod = "update";
@@ -289,7 +289,7 @@ public class AlvinMixedRecordStorageTest {
 	@Test
 	public void updatePlacesesIndexFactoryAndCallsIndexer() throws Exception {
 		RecordStorageSpyData expectedData = setUpExpectedData();
-		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 
 		RecordIndexerSpy recordIndexerSpy = recordIndexerFactory.factoredRecordIndexer;
@@ -312,7 +312,7 @@ public class AlvinMixedRecordStorageTest {
 
 		assertEquals(loggerFactorySpy.getNoOfErrorLogMessagesUsingClassName(testedClassName), 0);
 
-		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 
 		assertEquals(loggerFactorySpy.getNoOfErrorLogMessagesUsingClassName(testedClassName), 1);
@@ -331,7 +331,7 @@ public class AlvinMixedRecordStorageTest {
 		recordIndexerFactory.throwRuntimeErrorOnIndex = true;
 		RecordStorageSpyData expectedData = setUpExpectedData();
 
-		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.record,
+		alvinMixedRecordStorage.update(expectedData.type, expectedData.id, expectedData.dataRecord,
 				expectedData.collectedTerms, expectedData.linkList, expectedData.dataDivider);
 	}
 
@@ -339,7 +339,7 @@ public class AlvinMixedRecordStorageTest {
 		RecordStorageSpyData expectedData = new RecordStorageSpyData();
 		expectedData.type = "place";
 		expectedData.id = "someId";
-		expectedData.record = new DataGroupSpy("dummyRecord");
+		expectedData.dataRecord = new DataGroupSpy("dummyRecord");
 		expectedData.collectedTerms = new DataGroupSpy("collectedTerms");
 		expectedData.linkList = new DataGroupSpy("linkList");
 		expectedData.dataDivider = "someDataDivider";

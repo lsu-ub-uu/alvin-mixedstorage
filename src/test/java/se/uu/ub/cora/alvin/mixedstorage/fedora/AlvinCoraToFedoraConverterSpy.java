@@ -22,19 +22,19 @@ import se.uu.ub.cora.data.DataGroup;
 
 public class AlvinCoraToFedoraConverterSpy implements AlvinCoraToFedoraConverter {
 
-	public DataGroup record;
+	public DataGroup dataRecord;
 	public String returnedXML = "<dummy>Dummy xml from AlvinCoraToFedoraConverterSpy</dummy>";
 	public String returnedNewXML = "<dummy>Dummy new xml from AlvinCoraToFedoraConverterSpy</dummy>";
 
 	@Override
-	public String toXML(DataGroup record) {
-		this.record = record;
+	public String toXML(DataGroup dataRecord) {
+		this.dataRecord = dataRecord;
 		return returnedXML;
 	}
 
 	@Override
-	public String toNewXML(DataGroup record) {
-		this.record = record;
+	public String toNewXML(DataGroup dataRecord) {
+		this.dataRecord = dataRecord;
 		return returnedNewXML;
 	}
 

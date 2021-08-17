@@ -87,13 +87,13 @@ public final class AlvinMixedRecordStorage implements RecordStorage, SearchStora
 	}
 
 	@Override
-	public void create(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void create(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		if (PLACE.equals(type)) {
-			alvinFedoraToCoraStorage.create(type, id, record, collectedTerms, linkList,
+			alvinFedoraToCoraStorage.create(type, id, dataRecord, collectedTerms, linkList,
 					dataDivider);
 		} else {
-			basicStorage.create(type, id, record, collectedTerms, linkList, dataDivider);
+			basicStorage.create(type, id, dataRecord, collectedTerms, linkList, dataDivider);
 		}
 	}
 
@@ -112,14 +112,14 @@ public final class AlvinMixedRecordStorage implements RecordStorage, SearchStora
 	}
 
 	@Override
-	public void update(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void update(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		if (PLACE.equals(type)) {
-			alvinFedoraToCoraStorage.update(type, id, record, collectedTerms, linkList,
+			alvinFedoraToCoraStorage.update(type, id, dataRecord, collectedTerms, linkList,
 					dataDivider);
 			tryToSendIndexMessageToClassic(type, id);
 		} else {
-			basicStorage.update(type, id, record, collectedTerms, linkList, dataDivider);
+			basicStorage.update(type, id, dataRecord, collectedTerms, linkList, dataDivider);
 		}
 	}
 

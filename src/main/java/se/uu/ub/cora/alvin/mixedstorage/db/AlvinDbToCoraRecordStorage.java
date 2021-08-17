@@ -85,7 +85,7 @@ public final class AlvinDbToCoraRecordStorage implements RecordStorage {
 	}
 
 	@Override
-	public void create(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void create(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		throw NotImplementedException.withMessage("create is not implemented");
 	}
@@ -101,7 +101,7 @@ public final class AlvinDbToCoraRecordStorage implements RecordStorage {
 	}
 
 	@Override
-	public void update(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void update(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		throw NotImplementedException.withMessage("update is not implemented");
 	}

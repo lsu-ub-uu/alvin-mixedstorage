@@ -46,11 +46,11 @@ public class AlvinCoraToFedoraPlaceConverter implements AlvinCoraToFedoraConvert
 	}
 
 	@Override
-	public String toXML(DataGroup record) {
-		String recordId = getIdFromRecord(record);
+	public String toXML(DataGroup dataRecord) {
+		String recordId = getIdFromRecord(dataRecord);
 		String fedoraXML = getXMLForRecordFromFedora(recordId);
 		parser = XMLXPathParser.forXML(fedoraXML);
-		convertDefaultName(record);
+		convertDefaultName(dataRecord);
 		return parser.getDocumentAsString("/");
 	}
 
@@ -61,13 +61,13 @@ public class AlvinCoraToFedoraPlaceConverter implements AlvinCoraToFedoraConvert
 		return httpHandler.getResponseText();
 	}
 
-	private String getIdFromRecord(DataGroup record) {
-		DataGroup recordInfo = record.getFirstGroupWithNameInData("recordInfo");
+	private String getIdFromRecord(DataGroup dataRecord) {
+		DataGroup recordInfo = dataRecord.getFirstGroupWithNameInData("recordInfo");
 		return recordInfo.getFirstAtomicValueWithNameInData("id");
 	}
 
-	private void convertDefaultName(DataGroup record) {
-		String defaultNameFromPlaceRecord = getDefaultNameFromPlaceRecord(record);
+	private void convertDefaultName(DataGroup dataRecord) {
+		String defaultNameFromPlaceRecord = getDefaultNameFromPlaceRecord(dataRecord);
 		setStringFromDocumentUsingXPath("/place/defaultPlaceName/name", defaultNameFromPlaceRecord);
 	}
 
@@ -75,8 +75,8 @@ public class AlvinCoraToFedoraPlaceConverter implements AlvinCoraToFedoraConvert
 		parser.setStringInDocumentUsingXPath(xpathString, newValue);
 	}
 
-	private String getDefaultNameFromPlaceRecord(DataGroup record) {
-		Collection<DataGroup> nameGroups = record.getAllGroupsWithNameInDataAndAttributes("name",
+	private String getDefaultNameFromPlaceRecord(DataGroup dataRecord) {
+		Collection<DataGroup> nameGroups = dataRecord.getAllGroupsWithNameInDataAndAttributes("name",
 				DataAttributeProvider.getDataAttributeUsingNameInDataAndValue("type",
 						"authorized"));
 		DataGroup nameGroup = nameGroups.iterator().next();
@@ -98,13 +98,13 @@ public class AlvinCoraToFedoraPlaceConverter implements AlvinCoraToFedoraConvert
 	}
 
 	@Override
-	public String toNewXML(DataGroup record) {
+	public String toNewXML(DataGroup dataRecord) {
 		String newPlaceTemplate = ResourceReader.readResourceAsString("place/templatePlace.xml");
 		parser = XMLXPathParser.forXML(newPlaceTemplate);
-		setStringFromDocumentUsingXPath("/place/pid", getIdFromRecord(record));
-		convertDefaultName(record);
+		setStringFromDocumentUsingXPath("/place/pid", getIdFromRecord(dataRecord));
+		convertDefaultName(dataRecord);
 
-		DataGroup recordInfo = record.getFirstGroupWithNameInData("recordInfo");
+		DataGroup recordInfo = dataRecord.getFirstGroupWithNameInData("recordInfo");
 		convertCreatedBy(recordInfo);
 
 		String tsCreated = recordInfo.getFirstAtomicValueWithNameInData("tsCreated");

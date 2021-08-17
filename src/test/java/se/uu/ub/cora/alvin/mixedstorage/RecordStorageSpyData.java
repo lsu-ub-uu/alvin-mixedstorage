@@ -8,7 +8,7 @@ public class RecordStorageSpyData {
 	public String calledMethod;
 	public DataGroup filter;
 	public Object answer;
-	public DataGroup record;
+	public DataGroup dataRecord;
 	public DataGroup collectedTerms;
 	public DataGroup linkList;
 	public String dataDivider;

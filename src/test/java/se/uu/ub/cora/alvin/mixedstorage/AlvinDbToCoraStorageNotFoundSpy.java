@@ -19,7 +19,7 @@ public class AlvinDbToCoraStorageNotFoundSpy implements RecordStorage {
 	}
 
 	@Override
-	public void create(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void create(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		// TODO Auto-generated method stub
 
@@ -38,7 +38,7 @@ public class AlvinDbToCoraStorageNotFoundSpy implements RecordStorage {
 	}
 
 	@Override
-	public void update(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void update(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		// TODO Auto-generated method stub
 

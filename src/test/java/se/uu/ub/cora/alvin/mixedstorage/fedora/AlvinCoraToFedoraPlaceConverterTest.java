@@ -52,9 +52,9 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 		String fedoraURL = "someFedoraURL";
 		AlvinCoraToFedoraConverter converter = AlvinCoraToFedoraPlaceConverter
 				.usingHttpHandlerFactoryAndFedoraUrl(httpHandlerFactory, fedoraURL);
-		DataGroup record = createPlaceDataGroupUsingPid("alvin-place:679");
+		DataGroup dataRecord = createPlaceDataGroupUsingPid("alvin-place:679");
 
-		String xml = converter.toXML(record);
+		String xml = converter.toXML(dataRecord);
 		assertEquals(httpHandlerFactory.factoredHttpHandlers.size(), 1);
 		assertEquals(httpHandlerFactory.urls.get(0),
 				fedoraURL + "objects/alvin-place:679/datastreams/METADATA/content");
@@ -67,10 +67,10 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 	}
 
 	private DataGroup createPlaceDataGroupUsingPid(String id) {
-		DataGroup record = new DataGroupSpy("authority");
-		record.addAttributeByIdWithValue("type", "place");
+		DataGroup dataRecord = new DataGroupSpy("authority");
+		dataRecord.addAttributeByIdWithValue("type", "place");
 		DataGroup recordInfo = new DataGroupSpy("recordInfo");
-		record.addChild(recordInfo);
+		dataRecord.addChild(recordInfo);
 		recordInfo.addChild(new DataAtomicSpy("id", id));
 
 		DataGroup createdBy = new DataGroupSpy("createdBy");
@@ -81,7 +81,7 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 		recordInfo.addChild(new DataAtomicSpy("tsCreated", "2019-03-11 09:27:22.306"));
 
 		DataGroup authorizedNameGroup = new DataGroupSpy("name");
-		record.addChild(authorizedNameGroup);
+		dataRecord.addChild(authorizedNameGroup);
 		authorizedNameGroup.addAttributeByIdWithValue("type", "authorized");
 
 		DataGroup defaultNameGroup = new DataGroupSpy("namePart");
@@ -91,7 +91,7 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 		DataAtomic defaultNameValue = new DataAtomicSpy("value", "CORA_Uppsala_CORA");
 		defaultNameGroup.addChild(defaultNameValue);
 
-		return record;
+		return dataRecord;
 	}
 
 	@Test
@@ -102,9 +102,9 @@ public class AlvinCoraToFedoraPlaceConverterTest {
 		AlvinCoraToFedoraPlaceConverter converter = AlvinCoraToFedoraPlaceConverter
 				.usingHttpHandlerFactoryAndFedoraUrl(httpHandlerFactory, fedoraURL);
 
-		DataGroup record = createPlaceDataGroupUsingPid("alvin-place:680");
+		DataGroup dataRecord = createPlaceDataGroupUsingPid("alvin-place:680");
 
-		String xml = converter.toNewXML(record);
+		String xml = converter.toNewXML(dataRecord);
 
 		assertEquals(xml, ResourceReader.readResourceAsString("place/expectedCreated680.xml"));
 

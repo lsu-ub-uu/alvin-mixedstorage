@@ -107,31 +107,31 @@ public final class FedoraRecordStorage implements RecordStorage {
 	}
 
 	@Override
-	public void create(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void create(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		if (PLACE.equals(type)) {
-			createPlaceInFedora(type, id, record, collectedTerms);
+			createPlaceInFedora(type, id, dataRecord, collectedTerms);
 		} else {
 			throw NotImplementedException.withMessage("create is not implemented");
 		}
 	}
 
-	private void createPlaceInFedora(String type, String id, DataGroup record,
+	private void createPlaceInFedora(String type, String id, DataGroup dataRecord,
 			DataGroup collectedTerms) {
 		try {
-			tryToConvertAndCreatePlaceInFedora(type, id, record, collectedTerms);
+			tryToConvertAndCreatePlaceInFedora(type, id, dataRecord, collectedTerms);
 		} catch (Exception e) {
 			throw FedoraException.withMessageAndException(
 					"create in fedora failed with message: " + e.getMessage(), e);
 		}
 	}
 
-	private void tryToConvertAndCreatePlaceInFedora(String type, String id, DataGroup record,
+	private void tryToConvertAndCreatePlaceInFedora(String type, String id, DataGroup dataRecord,
 			DataGroup collectedTerms) {
 		String recordLabel = getRecordLabelValueFromStorageTerms(collectedTerms);
 		createObjectForPlace(id, recordLabel);
 		createRelationToModelForPlace(id);
-		String newXML = convertRecordToXML(type, record);
+		String newXML = convertRecordToXML(type, dataRecord);
 		createDatastreamForPlace(id, recordLabel, newXML);
 	}
 
@@ -199,9 +199,9 @@ public final class FedoraRecordStorage implements RecordStorage {
 		}
 	}
 
-	private String convertRecordToXML(String type, DataGroup record) {
+	private String convertRecordToXML(String type, DataGroup dataRecord) {
 		AlvinCoraToFedoraConverter converter = converterFactory.factorToFedoraConverter(type);
-		return converter.toNewXML(record);
+		return converter.toNewXML(dataRecord);
 	}
 
 	private void createDatastreamForPlace(String nextPidFromFedora, String recordLabel,
@@ -239,7 +239,7 @@ public final class FedoraRecordStorage implements RecordStorage {
 
 	private void throwErrorIfUnableToUpdateStateToDeleted(String id, int responseCode) {
 		if (OK != responseCode) {
-			throw FedoraException.withMessage("delete in fedora failed for record: " + id
+			throw FedoraException.withMessage("delete in fedora failed for dataRecord: " + id
 					+ WITH_RESPONSE_CODE_MESSAGE_PART + responseCode);
 		}
 	}
@@ -250,32 +250,32 @@ public final class FedoraRecordStorage implements RecordStorage {
 	}
 
 	@Override
-	public void update(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void update(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		if (PLACE.equals(type)) {
-			convertAndWritePlaceToFedora(type, id, record, collectedTerms);
+			convertAndWritePlaceToFedora(type, id, dataRecord, collectedTerms);
 		} else {
 			throw NotImplementedException
 					.withMessage("update is not implemented for type: " + type);
 		}
 	}
 
-	private void convertAndWritePlaceToFedora(String type, String id, DataGroup record,
+	private void convertAndWritePlaceToFedora(String type, String id, DataGroup dataRecord,
 			DataGroup collectedTerms) {
 		try {
-			tryToConvertAndWritePlaceToFedora(type, id, record, collectedTerms);
+			tryToConvertAndWritePlaceToFedora(type, id, dataRecord, collectedTerms);
 		} catch (Exception e) {
 			throw FedoraException
-					.withMessageAndException("update to fedora failed for record: " + id, e);
+					.withMessageAndException("update to fedora failed for dataRecord: " + id, e);
 		}
 	}
 
-	private void tryToConvertAndWritePlaceToFedora(String type, String id, DataGroup record,
+	private void tryToConvertAndWritePlaceToFedora(String type, String id, DataGroup dataRecord,
 			DataGroup collectedTerms) {
 		String url = createUrlForWritingMetadataStreamToFedora(id, collectedTerms);
 		HttpHandler httpHandler = createHttpHandlerForWritingUsingUrlAndRequestMethod(url, "PUT");
 
-		String fedoraXML = convertRecordToFedoraXML(type, record);
+		String fedoraXML = convertRecordToFedoraXML(type, dataRecord);
 		httpHandler.setOutput(fedoraXML);
 		int responseCode = httpHandler.getResponseCode();
 		throwErrorIfNotOkFromFedora(id, responseCode);
@@ -283,7 +283,7 @@ public final class FedoraRecordStorage implements RecordStorage {
 
 	private void throwErrorIfNotOkFromFedora(String id, int responseCode) {
 		if (OK != responseCode) {
-			throw FedoraException.withMessage("update to fedora failed for record: " + id
+			throw FedoraException.withMessage("update to fedora failed for dataRecord: " + id
 					+ WITH_RESPONSE_CODE_MESSAGE_PART + responseCode);
 		}
 	}
@@ -323,9 +323,9 @@ public final class FedoraRecordStorage implements RecordStorage {
 		return "recordLabelStorageTerm".equals(collectTermId);
 	}
 
-	private String convertRecordToFedoraXML(String type, DataGroup record) {
+	private String convertRecordToFedoraXML(String type, DataGroup dataRecord) {
 		AlvinCoraToFedoraConverter converter = converterFactory.factorToFedoraConverter(type);
-		return converter.toXML(record);
+		return converter.toXML(dataRecord);
 	}
 
 	@Override
@@ -448,7 +448,6 @@ public final class FedoraRecordStorage implements RecordStorage {
 			List<String> implementingTypes, DataGroup filter) {
 		throw NotImplementedException.withMessage(
 				"getTotalNumberOfRecordsForAbstractType is not implemented for " + abstractType);
-		// return 0;
 	}
 
 }

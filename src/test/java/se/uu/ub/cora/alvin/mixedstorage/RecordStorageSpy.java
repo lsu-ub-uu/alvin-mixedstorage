@@ -33,11 +33,11 @@ public class RecordStorageSpy implements RecordStorage, SearchStorage {
 	}
 
 	@Override
-	public void create(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void create(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		data.type = type;
 		data.id = id;
-		data.record = record;
+		data.dataRecord = dataRecord;
 		data.collectedTerms = collectedTerms;
 		data.linkList = linkList;
 		data.dataDivider = dataDivider;
@@ -62,11 +62,11 @@ public class RecordStorageSpy implements RecordStorage, SearchStorage {
 	}
 
 	@Override
-	public void update(String type, String id, DataGroup record, DataGroup collectedTerms,
+	public void update(String type, String id, DataGroup dataRecord, DataGroup collectedTerms,
 			DataGroup linkList, String dataDivider) {
 		data.type = type;
 		data.id = id;
-		data.record = record;
+		data.dataRecord = dataRecord;
 		data.collectedTerms = collectedTerms;
 		data.linkList = linkList;
 		data.dataDivider = dataDivider;

@@ -156,14 +156,14 @@ public class FedoraRecordStorageTest {
 	@Test
 	public void createPlaceCreatesRecordInStorages() throws Exception {
 		setUpResponsesForOkCreate();
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
 		DataGroup linkList = null;
 		String dataDivider = null;
 
-		alvinToCoraRecordStorage.create("place", "alvin-place:22", record, collectedTerms, linkList,
+		alvinToCoraRecordStorage.create("place", "alvin-place:22", dataRecord, collectedTerms, linkList,
 				dataDivider);
 
 		assertEquals(httpHandlerFactory.factoredHttpHandlers.size(), 3);
@@ -175,7 +175,7 @@ public class FedoraRecordStorageTest {
 		assertEquals(converterFactory.factoredToFedoraTypes.get(0), "place");
 		AlvinCoraToFedoraConverterSpy converter = (AlvinCoraToFedoraConverterSpy) converterFactory.factoredToFedoraConverters
 				.get(0);
-		assertEquals(converter.record, record);
+		assertEquals(converter.dataRecord, dataRecord);
 
 		assertCorrectHttpHandlerForCreatingDatastream(converter);
 
@@ -255,7 +255,7 @@ public class FedoraRecordStorageTest {
 	public void createPlaceErrorCreatingObjectDoNotCreateRelationOrDatastreamAndThrowsException()
 			throws Exception {
 		setUpResponsesForObjectCreationFailure();
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
@@ -263,7 +263,7 @@ public class FedoraRecordStorageTest {
 		String dataDivider = null;
 		boolean exceptionWasCaught = false;
 		try {
-			alvinToCoraRecordStorage.create("place", "alvin-place:22", record, collectedTerms,
+			alvinToCoraRecordStorage.create("place", "alvin-place:22", dataRecord, collectedTerms,
 					linkList, dataDivider);
 		} catch (FedoraException e) {
 			exceptionWasCaught = true;
@@ -287,7 +287,7 @@ public class FedoraRecordStorageTest {
 	public void createPlaceErrorCreatingRelationDoNotCreateDatastreamAndThrowsException()
 			throws Exception {
 		setUpResponsesForRelationCreationFailure();
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
@@ -295,7 +295,7 @@ public class FedoraRecordStorageTest {
 		String dataDivider = null;
 		boolean exceptionWasCaught = false;
 		try {
-			alvinToCoraRecordStorage.create("place", "alvin-place:22", record, collectedTerms,
+			alvinToCoraRecordStorage.create("place", "alvin-place:22", dataRecord, collectedTerms,
 					linkList, dataDivider);
 		} catch (FedoraException e) {
 			exceptionWasCaught = true;
@@ -321,7 +321,7 @@ public class FedoraRecordStorageTest {
 	@Test
 	public void createPlaceErrorCreatingDatastreamThrowsException() throws Exception {
 		setUpResponsesForDatastreamFailure();
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
@@ -329,7 +329,7 @@ public class FedoraRecordStorageTest {
 		String dataDivider = null;
 		boolean exceptionWasCaught = false;
 		try {
-			alvinToCoraRecordStorage.create("place", "alvin-place:22", record, collectedTerms,
+			alvinToCoraRecordStorage.create("place", "alvin-place:22", dataRecord, collectedTerms,
 					linkList, dataDivider);
 		} catch (FedoraException e) {
 			exceptionWasCaught = true;
@@ -378,7 +378,7 @@ public class FedoraRecordStorageTest {
 	}
 
 	@Test(expectedExceptions = FedoraException.class, expectedExceptionsMessageRegExp = ""
-			+ "delete in fedora failed for record: alvin-place:22, with response code: 500")
+			+ "delete in fedora failed for dataRecord: alvin-place:22, with response code: 500")
 	public void deleteByTypeAndIdIfNotOkFromFedoraThrowException() throws Exception {
 		httpHandlerFactory.responseTexts.add("Dummy response text");
 		httpHandlerFactory.responseCodes.add(500);
@@ -402,14 +402,14 @@ public class FedoraRecordStorageTest {
 	public void updateUpdatesRecordInStoragesName() throws Exception {
 		httpHandlerFactory.responseCodes.add(200);
 		httpHandlerFactory.responseTexts.add("Dummy response text");
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
 		DataGroup linkList = null;
 		String dataDivider = null;
 
-		alvinToCoraRecordStorage.update("place", "alvin-place:22", record, collectedTerms, linkList,
+		alvinToCoraRecordStorage.update("place", "alvin-place:22", dataRecord, collectedTerms, linkList,
 				dataDivider);
 
 		assertEquals(httpHandlerFactory.factoredHttpHandlers.size(), 1);
@@ -429,7 +429,7 @@ public class FedoraRecordStorageTest {
 		assertEquals(converterFactory.factoredToFedoraTypes.get(0), "place");
 		AlvinCoraToFedoraConverterSpy converterSpy = (AlvinCoraToFedoraConverterSpy) converterFactory.factoredToFedoraConverters
 				.get(0);
-		assertSame(converterSpy.record, record);
+		assertSame(converterSpy.dataRecord, dataRecord);
 		assertEquals(converterSpy.returnedXML, httpHandler.outputStrings.get(0));
 	}
 
@@ -454,7 +454,7 @@ public class FedoraRecordStorageTest {
 	public void updateIsMissingRecordLabelInCollectedStorageTerms() throws Exception {
 		httpHandlerFactory.responseCodes.add(200);
 		httpHandlerFactory.responseTexts.add("Dummy response text");
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 
 		DataGroup collectedTerms = new DataGroupSpy("collectedData");
 		collectedTerms.addChild(new DataAtomicSpy("type", "place"));
@@ -474,7 +474,7 @@ public class FedoraRecordStorageTest {
 		DataGroup linkList = null;
 		String dataDivider = null;
 
-		alvinToCoraRecordStorage.update("place", "alvin-place:22", record, collectedTerms, linkList,
+		alvinToCoraRecordStorage.update("place", "alvin-place:22", dataRecord, collectedTerms, linkList,
 				dataDivider);
 
 		assertEquals(httpHandlerFactory.factoredHttpHandlers.size(), 1);
@@ -484,28 +484,28 @@ public class FedoraRecordStorageTest {
 	}
 
 	@Test(expectedExceptions = FedoraException.class, expectedExceptionsMessageRegExp = ""
-			+ "update to fedora failed for record: alvin-place:22")
+			+ "update to fedora failed for dataRecord: alvin-place:22")
 	public void updateIfNotOkFromFedoraThrowException() throws Exception {
 		httpHandlerFactory.responseTexts.add("Dummy response text");
 		httpHandlerFactory.responseCodes.add(500);
 
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
-		alvinToCoraRecordStorage.update("place", "alvin-place:22", record, collectedTerms, null,
+		alvinToCoraRecordStorage.update("place", "alvin-place:22", dataRecord, collectedTerms, null,
 				null);
 	}
 
 	@Test(expectedExceptions = FedoraException.class, expectedExceptionsMessageRegExp = ""
-			+ "update to fedora failed for record: alvin-place:23")
+			+ "update to fedora failed for dataRecord: alvin-place:23")
 	public void updateIfNotOkFromFedoraThrowExceptionOtherRecord() throws Exception {
 		httpHandlerFactory.responseTexts.add("Dummy response text");
 		httpHandlerFactory.responseCodes.add(505);
 
-		DataGroup record = new DataGroupSpy("authority");
+		DataGroup dataRecord = new DataGroupSpy("authority");
 		DataGroup collectedTerms = createCollectTermsWithRecordLabel();
 
-		alvinToCoraRecordStorage.update("place", "alvin-place:23", record, collectedTerms, null,
+		alvinToCoraRecordStorage.update("place", "alvin-place:23", dataRecord, collectedTerms, null,
 				null);
 	}
 

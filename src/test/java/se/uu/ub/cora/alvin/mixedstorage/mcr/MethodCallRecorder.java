@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * MethodCallRecorder is a test helper class used to record and validate calls to methods in spies
+ * MethodCallRecorder is a test helper class used to dataRecord and validate calls to methods in spies
  * and similar test helping classes.
  * <p>
- * Spies and similar helper classes should create an internal instance of this class and then record
- * calls to its methods using the {@link #addCall(Object...)} method. And record answers to the
+ * Spies and similar helper classes should create an internal instance of this class and then dataRecord
+ * calls to its methods using the {@link #addCall(Object...)} method. And dataRecord answers to the
  * calls using the {@link #addReturned(Object)}method.
  * <p>
  * Tests can then validate that correct calls have been made using the
@@ -37,7 +37,7 @@ public class MethodCallRecorder {
 	private Map<String, List<Object>> returnedValues = new HashMap<>();
 
 	/**
-	 * addCall is expected to be used by spies and similar test helper classes to record calls made
+	 * addCall is expected to be used by spies and similar test helper classes to dataRecord calls made
 	 * to their methods.
 	 * <p>
 	 * The calling methods name (from the spy or similar) is automatically added to the provided
@@ -76,7 +76,7 @@ public class MethodCallRecorder {
 	}
 
 	/**
-	 * addReturned is expected to be used by spies and similar test helper classes to record return
+	 * addReturned is expected to be used by spies and similar test helper classes to dataRecord return
 	 * values sent from their methods.
 	 * <p>
 	 * The calling methods name (from the spy or similar) is automatically added to the provided

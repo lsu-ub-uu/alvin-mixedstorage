@@ -22,8 +22,8 @@ package se.uu.ub.cora.alvin.mixedstorage.fedora;
 import se.uu.ub.cora.data.DataGroup;
 
 public interface AlvinCoraToFedoraConverter {
-	public String toXML(DataGroup record);
+	public String toXML(DataGroup dataRecord);
 
-	public String toNewXML(DataGroup record);
+	public String toNewXML(DataGroup dataRecord);
 
 }
