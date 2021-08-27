@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import se.uu.ub.cora.alvin.mixedstorage.mcr.MethodCallRecorder;
 import se.uu.ub.cora.data.DataGroup;
 import se.uu.ub.cora.searchstorage.SearchStorage;
 import se.uu.ub.cora.storage.RecordStorage;
 import se.uu.ub.cora.storage.StorageReadResult;
+import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 
 public class RecordStorageSpy implements RecordStorage, SearchStorage {
 	public RecordStorageSpyData data = new RecordStorageSpyData();
